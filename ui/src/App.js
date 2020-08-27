@@ -4,8 +4,9 @@ import BookTable from './components/bookTable';
 class App extends Component {
     state = {  }
     render() {        
-        return ( <div className='App'>Hello World 
-        <BookTable />
+        return ( <div className='App'>
+                    Hello World 
+                    <BookTable />
         </div> );
     }
 }
