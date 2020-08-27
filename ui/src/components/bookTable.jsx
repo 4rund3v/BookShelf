@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import {bookListing} from '../services/books_listing';
+// named import {} & the default import 
+import { bookListing } from '../services/books_listing'
+
 
 class BookTable extends Component {
-    state = {  bookdata: bookListing }
-
+    state = {  }
+    
     render() {
-        // const tableStyle = {"border": "2px solid black","border-collapse": "collapse", "padding": "15px"}
-        const books = this.state.bookdata;
-        const tableHeader = <tr><th>Title</th><th>Author</th><th>Publishing Year</th></tr>;
+        console.log(bookListing);
+        const localbookListing = bookListing;
 
-        const tableBody = books.map((book) => <tr><th>{book.title}</th><th>{book.author}</th><th>{book.year}</th></tr> );
-        
-        // return ( <table className="bookTable" style={tableStyle}>
-        return ( <table className="bookTable">
-            {tableHeader}
-            {tableBody}
-        </table> );
+        const colNames = ["Book Title", "Author", "Year", "Series", "Rating"];
+        const tableHeader = <tr>{colNames.map((col) => <th>{col}</th>)} </tr>;
+        const tableBody = localbookListing.map((book) => <tr>
+                         <td>{book.title}</td>
+                         <td>{book.author}</td> 
+                         <td>{book.year}</td> 
+                         <td>{book.series}</td> </tr>);
+        const bookTable = <table className="bookTable">  {tableHeader} {tableBody} </table>;
+    return ( <div>{bookTable}</div>);
     }
 }
  
