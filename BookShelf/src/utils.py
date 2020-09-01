@@ -1,10 +1,11 @@
 from logging.handlers import RotatingFileHandler
+from BookShelf.etc import config
 import logging
-import config
+import os
 
 def get_logger(service_name, logger_level=logging.DEBUG):
     '''
-     @summary Get the logger instance for the service
+     Get the logger instance for the service
     '''
     logging.basicConfig(level=logger_level, format="[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s", datefmt='%Y-%m-%dT%H:%M:%S')
     logger = logging.getLogger(service_name)
