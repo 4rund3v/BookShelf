@@ -18,6 +18,11 @@ class Home extends Component {
               <Col xs={10}><MainContent /></Col>
             </Row>
           </Container>
+          <footer className='footer'>
+            <div className='container'>
+              <span className="text-muted">BookShelf 2020</span>
+            </div>
+          </footer>
         </div>
           );
 
