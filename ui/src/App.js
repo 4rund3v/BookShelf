@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import BookTable from './components/bookTable';
 import NavBarCustom from './components/navBar';
-import {Router} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
+import Home from './components/home'
 
 class App extends Component {
     state = {  }
     render() {        
-        return ( <Router>
-            <div className='App'>
-                    <NavBarCustom />
-                    <BookTable />
-        </div>
-            </Router> );
+        return (
+            <BrowserRouter>
+                <Home />
+            </BrowserRouter> );
     }
 }
 
