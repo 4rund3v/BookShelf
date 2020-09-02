@@ -47,8 +47,3 @@ class Book(Model):
 
     def __repr__(self):
         return u'<Book %r>' % self.title
-
-    def update(self):
-        db_session.add_all([self])
-        db_session.commit()
-        return self.id
