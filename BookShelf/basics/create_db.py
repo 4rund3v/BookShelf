@@ -23,6 +23,7 @@ books = Table( 'books', metadata,
               Column('updated_time', DateTime(), default=datetime.now, onupdate=datetime.now)
               )
 
+
 engine = create_engine("sqlite:///books.db", pool_recycle=3600)
 print("Engine Is : {}".format(engine))
 connection = engine.connect()
