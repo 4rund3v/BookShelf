@@ -53,20 +53,62 @@
 ------  
 
 ## Chapter 2 : Working with data via SQLAlchemy Core
-## ------  
+ SEL: Sql expression language is used by SQLAlchemy Core to  perform the database operations such as Insert,retrieve, delete, sort, group, relationships
+ - Connection Execute: use the
+            connection.execute(insert_data) to write the data into the database for single.
+            connection.execute(insert_obj, list_of_items) for insertingf multiple items into the db.
+ - can use the table objects to insert or select using the sqlalchemy functions
+    table.select()  --> for select
+    table.insert()  --> for insertion
+- A ResultProxy (rp) is returned when a selection isperformed on a table. It is a wrapper around a DBAPI cursor object and its main goal is to make it easier to use and manipulate the results of the selection statement.
+  You can access it using the index -> rp[0]
+    - first_row = rp[0] #access via index
+    - first_row.key_name  # access via key name
+    - first_row[table.c.coulmn_name] #access via the column object
+  You can use the following methods to access the data from the ResultProxy(rp)
+   - rp.first() : Preferred method to fetch the data from the db, it fetches one item and closes the connection.
+   - rp.fetchone() - Fetches one row from the results and keeps the cursor open to make additional fetch calls.
+   - rp.scalar() - to return a single record with one column else raises errors
+   - rp.fetchall() - to fetch all the items as a list
+   - for i in rp: iterable - Better to  iterate over the rp than fetchall.
+  Implement the filtering by using multiple where clauses, they will act like AND's
+- ClauseElements : are just an entity we can use in a clause, and they are typically columns in a table
+   However unlike coulms , ClauseElements come with many additional capabilities
+   Some claause element methods
+     - between(cleft, cright) 
+     - concat(column_two)
+     - distinct()
+     - in_([list])
+     - is_(None)
+     - contains(str) - find where the column has a string in it , case-sensitive
+     - endswith(str) - find where the column endswith string in it , case-sensitive
+     - like(str)     - find where the column is like string, case-sensitive
+     - startswith(str) - find where the column begins with the string, case-sensitive
+     - ilike(str)    - find where the column is like string, case-insensitive
+    CONTAINS in turn uses a special text index and is thus faster than LIKE. In addition to what other posters have added there are some fundamental differences in how the two functions work.
+    The most noticeable is that in order to use CONTAINS the column must have a full-text index already on it.
+ - Operators
+   We can use some standard operators like the ==, !=, <, >, <=, <=, >=
+ - Boolean Operators
+   SQLAlchmy also allows for the SQL Boolean operators AND,OR and NOT via the bitwise logical operators( &, |, and ~)
+ - Conjunctions
+   While its possible to chan multiple where() clauses together, it's often more readable and functional to use conjunctions to accomplish the desired effect.
+   The conjunctions in sqlalchemy are and_(), or_(), not_(), 
+------
 ## Chapter 3 : Exceptions and Transactions
-## ------  
+------
 ## Chapter 4 : Testing
-## ------  
+------  
 ## Chapter 5 : Reflection
-## ------  
+------
+
 ## Chapter 6 : Defining Schema with SQLAlchemy ORM
-## ------  
+------  
 ## Chapter 7 : Working with Data via SQLAlchemy ORM
-## ------  
+------  
 ## Chapter 8 : Understanding the Session and Exceptions
-## ------  
+------  
 ## Chapter 9 : Testing with SQLAlchemy ORM
-## ------  
+------
 ## Chapter 10 : Reflection with SQLAlchemy ORM and Automap
-## ------
+------
