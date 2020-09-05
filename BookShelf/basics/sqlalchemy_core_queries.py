@@ -7,26 +7,71 @@ from sqlalchemy import update # for the update of data
 
 
 def create_table(metadata, engine):
+    '''
+     Inital function to create the necessary tables
+    '''
     publishers = Table( 'publishers', metadata,
                     Column('publisher_id', Integer(), primary_key=True),
                     Column('publisher_name', String(180),unique=True, nullable=False),
                     Column('publisher_url', String(180)),
                   )
-    books = Table('books', metadata,
+
+    books = Table( 'books', metadata,
               Column('book_id', Integer(), primary_key=True),
               Column('book_title', String(256), nullable=False, index=True),
-              Column('book_author', String(128), nullable=False),
+              column('book_type', String(20), nullable=False),
               Column('book_cost', Numeric(12, 2), default=10),
               Column('book_stock', Integer(), default=0),
               Column('book_edition', Integer(), default=1),
-              Column('book_publisher', ForeignKey('publishers.publisher_id')),
+              
               Column("book_published_date", DateTime(), default=datetime.now, nullable=False),
-              Column('updated_time', DateTime(), default=datetime.now, onupdate=datetime.now)
+              Column('updated_time', DateTime(), default=datetime.now, onupdate=datetime.now),
+              
+              Column("book_owner",  ForeignKey('users.user_id')),
+              Column("book_genre",  ForeignKey('genre.genre_id')),
+              Column("book_progress",  ForeignKey('progress.progress_id')),
+              Column('book_publisher', ForeignKey('publishers.publisher_id')),
+              Column("book_authorship",  ForeignKey('authorship.authorship_id')),
               )
-    metadata.create_all(engine)
-    return publishers, books
 
-def insert_entries(engine, publishers, books):
+    author = Table( 'author', metadata,
+                    Column('author_id', Integer(), primary_key=True),
+                    Column('author_name', String(30), unique=True, nullable=False),
+                    Column('author_url', String(60)))
+
+    authorship = Table( 'authorship', metadata, 
+                    Column('authorship_id', Integer(), primary_key=True),
+                    Column('primary_author_id', ForeignKey('author.author_id')),
+                    Column('secondary_author_id', ForeignKey('author.author_id')),
+                    Column('ternary_author_id', ForeignKey('author.author_id'))
+                   )
+
+    genre = Table( "genre", metadata,
+                    Column('genre_id', Integer(), primary_key=True),
+                    Column('genre_name', String(20), unique=True, nullable=False),
+                    Column('genre_shorthand', String(10), nullable=False) 
+                    )
+
+    users = Table(  "users", metadata,
+                    Column("user_id", Integer(), primary_key=True),
+                    Column("user_name", String(30), unique=True, nullable=False),
+                    Column("user_email", String(60), nullable=False),
+                    Column("user_password", String(30), nullable=False)
+                  )
+    
+    progress = Table(  "progress", metadata,
+                    Column("progress_id", Integer(), primary_key=True),
+                    Column("progerss_percent", Integer(), default=10),
+                    Column("progress_chapter", String(60)),
+                    Column("progress_comment", String(100))
+                  )
+
+    db_res = metadata.create_all(engine)
+    print("Creation of the table results are : {} ".format(db_res))
+    return publishers, books, author, authorship, genre, users, progress
+
+
+def insert_entries(engine, publishers, books, author, authorship, genre, users, progress):
     ins = publishers.insert().values(
             publisher_name="O'reilly Media Publications",
             publisher_url="https://www.oreilly.com/"
@@ -136,6 +181,11 @@ def update_publishers(connection, publishers):
         print(i.publisher_name)
     pass
 
+def generate_data(engine):
+    author = Table
+    books
+    return 
+
 if __name__ == "__main__":
     engine = create_engine("sqlite:///books.db", pool_recycle=3600)
     print("Engine Is : {}".format(engine))
@@ -143,8 +193,8 @@ if __name__ == "__main__":
     print("Connection Established is : {} ".format(connection))
     metadata = MetaData()
     print("Metadata initialized is : {} ".format(metadata))
-    publishers, books = create_table(metadata=metadata, engine=engine)
-    # insert_entries(engine, publishers, books)
-    query_publishers(connection, publishers)
-    query_upon_publishers(connection, publishers)
-    update_publishers(connection, publishers)
+    publishers, books, author, authorship, genre, users, progress = create_table(metadata=metadata, engine=engine)
+    insert_entries(engine, publishers, books, author, authorship, genre, users, progress)
+    #query_publishers(connection, publishers)
+    #query_upon_publishers(connection, publishers)
+    #update_publishers(connection, publishers)
