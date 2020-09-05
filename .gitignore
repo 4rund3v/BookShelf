@@ -5,3 +5,6 @@
 logs/*
 *.log
 *.db
+*.vs
+.vs/
+*__pycache__
