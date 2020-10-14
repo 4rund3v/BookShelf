@@ -1,4 +1,35 @@
+
+from flask import send_from_directory
 from flask import Flask
+import os
+
+
+
+root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"build")
+static_root = os.path.join(root, "static")
+print("Root path is : {}".format(root))
+print("RootStatic path is : {}".format(static_root))
 
 app = Flask("BookShelf")
+
+@app.route("/static/<path:path>", methods=["GET"])
+def serve_static(path):
+    """
+     The default index page that will be served from the build dir
+    """
+    print("[serve_static] The static path being requested is :{} ".format(path))
+    return send_from_directory(static_root, path)
+
+
+# the index page being served from the build dir
+@app.route("/", methods=["GET"])
+@app.route("/index", methods=["GET"])
+def index():
+    """
+     The default index page that will be served from the build dir
+    """
+    print("[index] The base path being requested is :{} ".format('index.html'))
+    return send_from_directory(root, 'index.html')
+
+
 app.run(host="0.0.0.0", port=5000, debug=True)
