@@ -10,16 +10,7 @@ static_root = os.path.join(root, "static")
 print("Root path is : {}".format(root))
 print("RootStatic path is : {}".format(static_root))
 
-app = Flask("BookShelf")
-
-@app.route("/static/<path:path>", methods=["GET"])
-def serve_static(path):
-    """
-     The default index page that will be served from the build dir
-    """
-    print("[serve_static] The static path being requested is :{} ".format(path))
-    return send_from_directory(static_root, path)
-
+app = Flask("BookShelf", static_url_path='/static', static_folder=static_root)
 
 # the index page being served from the build dir
 @app.route("/", methods=["GET"])
