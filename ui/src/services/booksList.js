@@ -1,4 +1,4 @@
-export const bookListing = [
+export const booksList = [
     {
         "id": 'item1',
         "rating": 10,
