@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import BookTable from "./bookTable";
+import BookTable from "./bookTable/bookTable";
 
 class MainContent extends Component {
   state = {};

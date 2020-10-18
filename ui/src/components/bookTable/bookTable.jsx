@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 // named import {} & the default import
-import { booksList } from "../services/booksList";
 import BookListing from "./bookListing";
 
 //import Navbar from 'react-bootstrap/Navbar';
@@ -15,11 +14,41 @@ import {
 } from "react-bootstrap";
 
 class BookTable extends Component {
-  state = { booklisting: [], notification: 0, footer: 0 };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoaded: false,
+      booklisting: [],
+      totalBooks: 0,
+      booksPerPage: 0,
+      notification: 0,
+      footer: 0,
+    };
+  }
   componentDidMount() {
-    console.log("Component did mount");
-    this.setState({ booklisting: booksList });
+    console.log("[BookTable][componentDidMount] fetching data from server");
+    fetch("http://192.168.1.41:5000/books")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            booklisting: result.books,
+            totalBooks: result.total_books,
+            booksPerPage: result.entries_per_page,
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+
     //this.state = { booklisting: bookListing }
   }
 
