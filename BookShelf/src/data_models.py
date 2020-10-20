@@ -43,6 +43,8 @@ class Book(Model):
     pubdate = Column(Date)
     price = Column(Integer)
     stock = Column(Integer)
+    book_type = Column(String(20))
+    owner = Column(String(20))
     # authors = relationship('Authors', secondary='authorship', backref='books', lazy='joined')
     # publisher = relationship('Publisher', backref='books', lazy='dynamic')
     # genre = relationship('Genre', backref='books', lazy='dynamic')
