@@ -25,9 +25,11 @@ class BookTable extends Component {
       footer: 0,
     };
   }
+
   componentDidMount() {
     console.log("[BookTable][componentDidMount] fetching data from server");
-    fetch("http://192.168.1.41:5000/books")
+    const bookFetchUrl = process.env.REACT_APP_SERVER_URL+"/books";
+    fetch(bookFetchUrl)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -42,6 +44,10 @@ class BookTable extends Component {
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
         (error) => {
+          console.log(
+            "[BookTable][componentDidMount] Could not fetch the data from the server",
+            error
+          );
           this.setState({
             isLoaded: true,
             error,
@@ -54,7 +60,14 @@ class BookTable extends Component {
 
   prepareTable() {
     const tableStyle = { border: "1px solid black", padding: "10px" };
-    const colNames = ["Book Title", "Author", "Year", "Series", "Rating"];
+    const colNames = [
+      "Book Title",
+      "Author",
+      "Book Type",
+      "Year",
+      "Series",
+      "Rating",
+    ];
     const tableHeader = (
       <tr style={tableStyle}>
         {colNames.map((col) => (
