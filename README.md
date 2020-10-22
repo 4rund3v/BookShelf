@@ -7,4 +7,3 @@ BookShelf is an application to keep track of ebooks, hard cover books, progress 
  - Images of the books with details  and links to download the the book(Soft copy)
  - Track Progress of the books
  - Track Book copy status
-
