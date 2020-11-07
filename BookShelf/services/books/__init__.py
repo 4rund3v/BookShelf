@@ -1,1 +1,1 @@
-from .books_blueprint import books_blueprint
+from books.books_blueprint import books_blueprint

@@ -1,0 +1,1 @@
+from tasks.tasks_blueprint import tasks_blueprint
