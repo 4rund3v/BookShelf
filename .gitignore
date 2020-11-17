@@ -1,10 +1,20 @@
+# virtual environment dir
 .venv/
-*.env
-*.pyc
-*/__pycache__/*
+
+# temporary python files
+*.py[cod]
+*__pycache__*
+
+#logs directory
 logs/*
 *.log
+
+# the environment file
+*.env
+
+# Sqlite db file
 *.db
-*.vs
+
+# vscode files
 .vs/
-*__pycache__
+*.vs

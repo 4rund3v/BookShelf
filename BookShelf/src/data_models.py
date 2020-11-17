@@ -20,6 +20,18 @@ logger.info("[data_models] The db_session is setup : {} ".format(db_session))
 
 Model = declarative_base()
 
+class User(Model):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    username = Column(String(20), unique=True)
+    password = Column(String(30))
+    name = Column(String(128))
+    email_id = Column(String(128))
+
+    def __repr__(self):
+        return "<User(username={!r}, name={!r}, email_id={!r})>".format(self.username, self.name, self.email_id)
+
 class Book(Model):
     __tablename__ = 'books'
     id = Column(Integer, primary_key=True)
@@ -31,11 +43,11 @@ class Book(Model):
     pubdate = Column(Date)
     price = Column(Integer)
     stock = Column(Integer)
-    
+    book_type = Column(String(20))
+    owner = Column(String(20))
     # authors = relationship('Authors', secondary='authorship', backref='books', lazy='joined')
     # publisher = relationship('Publisher', backref='books', lazy='dynamic')
     # genre = relationship('Genre', backref='books', lazy='dynamic')
-
 
     def __hash__(self):
         return self.id
@@ -47,3 +59,4 @@ class Book(Model):
 
     def __repr__(self):
         return u'<Book %r>' % self.title
+
